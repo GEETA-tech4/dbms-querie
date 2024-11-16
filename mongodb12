@@ -1,0 +1,43 @@
+
+use institute;
+db.createCollection("students"); // Create the "students" collection
+db.students.insertMany([
+    {
+        "RollNo": 1,
+        "Name": "Alice",
+        "Age": 17,
+        "Branch": "ECE",
+        "Address": { "City": "Pune", "State": "Maharashtra" },
+        "Hobbies": ["Reading", "Swimming"]
+    },
+    {
+        "RollNo": 2,
+        "Name": "Bob",
+        "Age": 18,
+        "Branch": "CSE",
+        "Address": { "City": "Mumbai", "State": "Maharashtra" },
+        "Hobbies": ["Painting", "Cycling"]
+    }
+]);
+
+db.students.find().pretty(); // Display all documents in the students collection
+
+db.students.find().sort({ "Name": 1 }).pretty(); // Sort by Name in ascending order
+
+db.students.find({ "Age": { $gt: 15 } }).pretty(); // Filter students older than 15
+
+db.students.updateOne(
+    { "RollNo": 3 },
+    { $set: { "Branch": "CSE" } }
+);
+
+db.students.deleteOne({ "RollNo": 1 }); // Remove the document where RollNo is 1
+
+db.students.find({ "Name": { $regex: "^A", $options: "i" } }).pretty(); // Match names starting with 'A'
+
+db.students.countDocuments(); // Get the total number of documents
+db.students.find().limit(5).pretty(); // Limit the result to the first 5 documents
+db.students.find().skip(2).pretty(); // Skip the first 2 documents and show the rest
+db.students.find({}, { "Name": 1, "_id": 0 }).pretty(); // Display only the "Name" field
+
+
